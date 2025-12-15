@@ -2,7 +2,6 @@ package com.example.HospitalResource.controller;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,48 +12,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.HospitalResource.entity.BedAllocation;
-import com.example.HospitalResource.service.BedAllocationService;
+import com.example.HospitalResource.entity.EquipmentTracking;
+import com.example.HospitalResource.service.EquipmentTrackingService;
 
 @RestController
-@RequestMapping("/api/beds")
-public class BedAllocationController {
+@RequestMapping("/api/equipment-tracking")
+public class EquipmentTrackingController {
+
+	private final EquipmentTrackingService service;
 	
-	private final BedAllocationService service;
-	
-	public BedAllocationController(BedAllocationService service){
+	public EquipmentTrackingController(EquipmentTrackingService service) {
 		this.service=service;
 	}
 	
-	@PostMapping
-	public ResponseEntity<BedAllocation> create(@RequestBody BedAllocation bed ){
-		return ResponseEntity.ok(service.create(bed));
-	}
-	
 	@GetMapping
-	public ResponseEntity<List<BedAllocation>> getAll(){
+	public ResponseEntity<List<EquipmentTracking>> getAll(){
 		return ResponseEntity.ok(service.findAll());
 	}
-	
 	@GetMapping("/{id}")
-	public ResponseEntity<BedAllocation> getById(@PathVariable("id") Long id){
+	public ResponseEntity<EquipmentTracking> findById(@PathVariable Long id){
 		return service.findById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
-	@GetMapping("/patient/{patientId}")
-	public ResponseEntity<List<BedAllocation>> getByPatient(@PathVariable Long patientId){
-		return ResponseEntity.ok(service.findByPatientId(patientId));
+	@GetMapping("/patient/patientId")
+	public ResponseEntity<List<EquipmentTracking>> findByPatient(@PathVariable String patientId){
+		return ResponseEntity.ok(service.findByAssignedToPatientId(patientId));
+	}
+	@PostMapping
+	public ResponseEntity<EquipmentTracking> create(@RequestBody EquipmentTracking equipment){
+		return ResponseEntity.ok(service.create(equipment));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<BedAllocation> update(@PathVariable Long id,@RequestBody BedAllocation bed){
+	public ResponseEntity<EquipmentTracking> update(@PathVariable Long id,@RequestBody EquipmentTracking equipment){
 		try {
-			BedAllocation updated=service.update(id, bed);
+			EquipmentTracking updated=service.update(id, equipment);
 			return ResponseEntity.ok(updated);
 		}catch(RuntimeException e) {
 			return ResponseEntity.notFound().build();
 		}
+		
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id){

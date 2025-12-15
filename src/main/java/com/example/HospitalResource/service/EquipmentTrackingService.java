@@ -40,4 +40,15 @@ public class EquipmentTrackingService {
 					return repo.save(existing);
 				}).orElseThrow(()->new RuntimeException("EquipmentTracking not found with id: "+id));
 	}
+	public void deleteById(Long id) {
+		if(!repo.existsById(id)) {
+			throw new RuntimeException("EquipmentTracking not found with id: "+id);
+		}
+		repo.deleteById(id);
+	}
+	
+	public List<EquipmentTracking> findByAssignedToPatientId(String patientId){
+		return repo.findByAssignedToPatientId(patientId);
+	}
+	
 }

@@ -45,4 +45,10 @@ public class BedAllocationService {
 	public List<BedAllocation> findByPatientId(Long patientId){
 		return bedAllocationRepository.findByPatientId(patientId);
 	}
+	public void deleteById(Long id) {
+		if(!bedAllocationRepository.existsById(id)) {
+			throw new RuntimeException("Bed allocation not found in that id:  "+id);
+		}
+		bedAllocationRepository.deleteById(id);
+	}
 }

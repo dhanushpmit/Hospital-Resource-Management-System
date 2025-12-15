@@ -26,7 +26,7 @@ public class EquipmentTracking {
 	private String equipCode;
 	private String equipName;
 	private String status;
-	private String assignedToPatientId;
+	private Long assignedToPatientId;
 	private LocalDateTime assignedAt;
 	private LocalDateTime releasedAt;
 
