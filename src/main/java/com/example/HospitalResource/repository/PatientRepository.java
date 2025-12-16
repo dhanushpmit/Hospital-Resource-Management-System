@@ -12,4 +12,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long>
 List<Patient> findByStatus(@Param("status") String status);
 
 List<Patient> findByStaffId(@Param("staffid") Long staffId);
+
+List<Patient> findByNameContainingIgnoreCase(String namePart);
 }

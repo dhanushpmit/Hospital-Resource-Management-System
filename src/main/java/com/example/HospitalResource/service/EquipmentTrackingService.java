@@ -30,7 +30,7 @@ public class EquipmentTrackingService {
 	}
 	public EquipmentTracking update(Long id,EquipmentTracking updated) {
 		return repo.findById(id)
-				.map(existing->{
+				.map(existing->{ 
 					existing.setEquipCode(updated.getEquipCode());
 					existing.setEquipName(updated.getEquipName());
 					existing.setStatus(updated.getStatus());
