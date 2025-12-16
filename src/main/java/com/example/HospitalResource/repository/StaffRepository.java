@@ -10,6 +10,15 @@ import com.example.HospitalResource.entity.Staff;
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
 	Optional<Staff> findByStaffCode(String staffCode);
+	
 	List<Staff> findByRole(String role);
+	
+	List<Staff> findByDepartment(String department);
+	
+	List<Staff> findByIsActive(Boolean isActive);
+	
+	List<Staff> findByShift(String shift);
+	
+	List<Staff> findByNameContainingIgnoreCase(String namePart);
 	
 }
