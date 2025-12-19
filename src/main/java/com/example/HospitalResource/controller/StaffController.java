@@ -38,12 +38,6 @@ public class StaffController {
 					.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/code/{staffCode}")
-	public ResponseEntity<Staff> getByCode(@PathVariable String staffCode){
-		return service.findByStaffCode(staffCode)
-					.map(ResponseEntity::ok)
-					.orElse(ResponseEntity.notFound().build());
-	}
 	
 	@GetMapping("/department/{department}")
 	public ResponseEntity<List<Staff>> getByDepartment(@PathVariable String department){

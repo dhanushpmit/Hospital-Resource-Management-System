@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.HospitalResource.dto.EquipmentTrackingDto;
 import com.example.HospitalResource.entity.EquipmentTracking;
+import com.example.HospitalResource.entity.Patient;
 import com.example.HospitalResource.service.EquipmentTrackingService;
 
 @RestController
@@ -29,20 +32,24 @@ public class EquipmentTrackingController {
 	public ResponseEntity<List<EquipmentTracking>> getAll(){
 		return ResponseEntity.ok(service.findAll());
 	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<EquipmentTracking> findById(@PathVariable Long id){
 		return service.findById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
-	@GetMapping("/patient/patientId")
-	public ResponseEntity<List<EquipmentTracking>> findByPatient(@PathVariable String patientId){
-		return ResponseEntity.ok(service.findByAssignedToPatientId(patientId));
+	
+	@GetMapping("/patient/{patientId}")
+	public ResponseEntity<List<EquipmentTracking>> findByPatientId(@PathVariable Long patientId){
+		return ResponseEntity.ok(service.findByPatientId(patientId));
 	}
+	
 	@PostMapping
-	public ResponseEntity<EquipmentTracking> create(@RequestBody EquipmentTracking equipment){
+	public ResponseEntity<EquipmentTracking> create(@RequestBody EquipmentTrackingDto equipment){
 		return ResponseEntity.ok(service.create(equipment));
 	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<EquipmentTracking> update(@PathVariable Long id,@RequestBody EquipmentTracking equipment){
 		try {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.HospitalResource.dto.BedAllocationDto;
 import com.example.HospitalResource.entity.BedAllocation;
 import com.example.HospitalResource.service.BedAllocationService;
 
@@ -27,7 +28,7 @@ public class BedAllocationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<BedAllocation> create(@RequestBody BedAllocation bed ){
+	public ResponseEntity<BedAllocation> create(@RequestBody BedAllocationDto bed ){
 		return ResponseEntity.ok(service.create(bed));
 	}
 	

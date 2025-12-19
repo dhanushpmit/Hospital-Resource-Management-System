@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.HospitalResource.entity.EquipmentTracking;
+import com.example.HospitalResource.entity.Patient;
 
 public interface EquipmentTrackingRepository extends JpaRepository<EquipmentTracking, Long> {
-	List<EquipmentTracking> findByAssignedToPatientId(String assignedToPatientId);
+	//List<EquipmentTracking> findByPatient(Patient patient);
+	List<EquipmentTracking> findByPatientId(Long patientId);
 }

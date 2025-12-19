@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.HospitalResource.entity.Patient;
+import com.example.HospitalResource.exception.PatientNotFoundException;
 import com.example.HospitalResource.service.PatientService;
 
 @RestController
@@ -35,8 +36,8 @@ public class PatientController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Patient>> getById(@PathVariable Long id){
-		return ResponseEntity.ok(service.findById(id));
+	public ResponseEntity<Patient> getById(@PathVariable Long id) {
+	    return ResponseEntity.ok(service.findById(id));
 	}
 	
 	@GetMapping("/staff/{staffId}")
@@ -45,7 +46,7 @@ public class PatientController {
 	}
 	
 	@GetMapping("/status/{status}")
-	public ResponseEntity<List<Patient>> getByStaff(@PathVariable String status){
+	public ResponseEntity<List<Patient>> getByStatus(@PathVariable String status){
 		return ResponseEntity.ok(service.findByStatus(status));
 	}
 	
@@ -56,9 +57,8 @@ public class PatientController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Patient> create(@RequestBody Patient patient){
-		Patient created=service.create(patient);
-		return ResponseEntity.ok(created);
+	public ResponseEntity<Patient> create(@RequestBody Patient patient,@RequestParam(required=false) Long staffId){
+		return ResponseEntity.ok(service.create(patient,staffId));
 	}
 	
 	@PutMapping("/{id}")
@@ -91,4 +91,19 @@ public class PatientController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	//assign staff
+	@PostMapping("/{patientId}/assign-staff/{staffId}")
+    public ResponseEntity<Patient> assignStaff(
+            @PathVariable Long patientId,
+            @PathVariable Long staffId) {
+        return ResponseEntity.ok(service.assignStaff(patientId, staffId));
+    }
+	
+	
+	 @PostMapping("/{patientId}/remove-staff/{staffId}")
+	    public ResponseEntity<Patient> removeStaff(@PathVariable Long patientId, @PathVariable Long staffId) {
+	        return ResponseEntity.ok(service.removeStaff(patientId, staffId));
+	    }
+	
 }

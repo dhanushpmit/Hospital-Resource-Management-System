@@ -24,10 +24,6 @@ public class StaffService {
 		return repo.findById(id);
 	}
 	
-	public Optional<Staff> findByStaffCode(String staffCode){
-		return repo.findByStaffCode(staffCode);
-	}
-	
 	public Staff create(Staff staff) {
 		return repo.save(staff);
 	}
