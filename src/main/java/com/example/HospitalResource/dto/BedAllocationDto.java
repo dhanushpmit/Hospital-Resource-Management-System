@@ -7,10 +7,6 @@ import lombok.Data;
 public class BedAllocationDto {
 
     private Long patientId;          
-    private String ward;
-    private String bedNumber;
-    private String roomNumber;
-    private Boolean isOccupied;
+    private Long bedId;
     private LocalDateTime allocationStart;
-    private LocalDateTime allocationEnd;
 }

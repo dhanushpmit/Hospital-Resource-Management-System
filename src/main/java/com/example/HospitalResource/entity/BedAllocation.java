@@ -27,19 +27,18 @@ public class BedAllocation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String ward;
-	private String bedNumber;
-	private String roomNumber;
-	private Boolean isOccupied;
+	
 	private LocalDateTime allocationStart;
 	private LocalDateTime allocationEnd;
 	
 
 	@ManyToOne(optional =false)
 	@JoinColumn(name="patient_id",nullable=false)
-	@JsonIgnoreProperties({
-		"bedAllocations","equipmentTrackings","staffList"
-	})
+	@JsonIgnoreProperties({"bedAllocations","equipmentTrackings","staffList"})
 	private Patient patient;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="bed_id")
+	private Bed bed;
 	
 }

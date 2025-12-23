@@ -71,7 +71,7 @@ public class StaffService {
 		return repo.findByNameContainingIgnoreCase(namePart);
 	}
 	
-	public Staff partialUpdate(Long id,Staff patch) {
-		return update(id,patch);
-	}
+//	public Staff partialUpdate(Long id,Staff patch) {
+//		return update(id,patch);
+//	}
 }

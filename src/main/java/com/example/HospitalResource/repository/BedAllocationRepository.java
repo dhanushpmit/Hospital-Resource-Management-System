@@ -12,5 +12,7 @@ public interface BedAllocationRepository extends JpaRepository<BedAllocation, Lo
 	
 	Optional<BedAllocation> findByPatientIdAndAllocationEndNull(Long patientId);
 
+	Optional<BedAllocation> findByBedIdAndAllocationEndIsNull(Long bedId);
+	
 	List<BedAllocation> findByPatientId(Long patientId);
 }

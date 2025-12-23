@@ -1,26 +1,36 @@
 package com.example.HospitalResource.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.HospitalResource.entity.Bed;
 import com.example.HospitalResource.entity.Patient;
 import com.example.HospitalResource.entity.Staff;
 import com.example.HospitalResource.exception.PatientNotFoundException;
+import com.example.HospitalResource.repository.BedAllocationRepository;
+import com.example.HospitalResource.repository.BedRepository;
 import com.example.HospitalResource.repository.PatientRepository;
 import com.example.HospitalResource.repository.StaffRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PatientService {
 
 	private final PatientRepository patientRepo;
 	private final StaffRepository staffRepo;
+	private final BedAllocationRepository bedAllocationRepo;
+	private final BedRepository bedRepo;
 
 	
-	public PatientService(PatientRepository patientRepo,StaffRepository staffRepo) {
+	public PatientService(PatientRepository patientRepo,StaffRepository staffRepo,BedAllocationRepository bedAllocationRepo,BedRepository bedRepo) {
 		this.patientRepo=patientRepo;
 		this.staffRepo=staffRepo;
+		this.bedAllocationRepo=bedAllocationRepo;
+		this.bedRepo=bedRepo;
 
 	}
 	
@@ -79,9 +89,9 @@ public class PatientService {
 	}
 	
 	//patch
-	public Patient partialUpdate(Long id,Patient patch) {
-		return update(id ,patch);
-	}
+//	public Patient partialUpdate(Long id,Patient patch) {
+//		return update(id ,patch);
+//	}
 	
 	//Staff Assignment
 	
@@ -103,7 +113,52 @@ public class PatientService {
 
         patient.removeStaff(staff);
         return patientRepo.save(patient);
+        
+        
+       
     }
+	
+	
+	
+	//Discharge patient and free bed
+	@Transactional
+	public Patient dischargePatient(Long patientId, LocalDateTime dischargeTime) {
+
+	    Patient patient = patientRepo.findById(patientId)
+	            .orElseThrow(() ->
+	                    new RuntimeException("Patient not found with id: " + patientId)
+	            );
+
+	    // ❗ Prevent double discharge
+	    if ("DISCHARGED".equalsIgnoreCase(patient.getStatus())) {
+	        throw new RuntimeException("Patient already discharged");
+	    }
+
+	    LocalDateTime finalTime =
+	            (dischargeTime != null) ? dischargeTime : LocalDateTime.now();
+
+	    // 1️⃣ Update patient
+	    patient.setStatus("DISCHARGED");
+	    patient.setDischargeDate(finalTime);
+
+	    // 2️⃣ Find active bed allocation
+	    bedAllocationRepo.findByPatientIdAndAllocationEndNull(patientId)
+	            .ifPresent(allocation -> {
+
+	                allocation.setAllocationEnd(finalTime);
+
+	                Bed bed = allocation.getBed();
+	                if (bed != null) {
+	                    bed.setIsAvailable(true);
+	                    bedRepo.save(bed);
+	                }
+
+	                bedAllocationRepo.save(allocation);
+	            });
+
+	    return patientRepo.save(patient);
+	}
+
 	
 	
 	

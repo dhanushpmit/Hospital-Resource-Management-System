@@ -1,5 +1,6 @@
 package com.example.HospitalResource.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,15 +72,24 @@ public class PatientController {
 			
 		}
 	}
-	@PatchMapping("/{id}")
-	public ResponseEntity<Patient> patch(@PathVariable Long id,@RequestBody Patient patch){
-		try {
-			Patient updated=service.partialUpdate(id, patch);
-			return ResponseEntity.ok(updated);
-		}catch(RuntimeException e) {
-			return ResponseEntity.notFound().build();
-		}
+	
+//	@PatchMapping("/{id}")
+//	public ResponseEntity<Patient> patch(@PathVariable Long id,@RequestBody Patient patch){
+//		try {
+//			Patient updated=service.partialUpdate(id, patch);
+//			return ResponseEntity.ok(updated);
+//		}catch(RuntimeException e) {
+//			return ResponseEntity.notFound().build();
+//		}
+//	}
+	
+	
+	
+	@PutMapping("/{id}/discharge")
+	public ResponseEntity<Patient> dischargePatient(@PathVariable Long id,@RequestParam(required = false) LocalDateTime time) {
+	    return ResponseEntity.ok(service.dischargePatient(id, time));
 	}
+
 	
 	
 	@DeleteMapping("/{id}")

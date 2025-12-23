@@ -54,11 +54,11 @@ public class EquipmentTrackingService {
 	public EquipmentTracking update(Long id,EquipmentTracking updated) {
 		return repo.findById(id)
 				.map(existing->{ 
-					existing.setEquipName(updated.getEquipName());
-					existing.setStatus(updated.getStatus());
-					existing.setPatient(updated.getPatient());
-					existing.setAssignedAt(updated.getAssignedAt());
-					existing.setReleasedAt(updated.getReleasedAt());
+					if(updated.getEquipName()!=null)existing.setEquipName(updated.getEquipName());
+					if(updated.getStatus()!=null) existing.setStatus(updated.getStatus());
+					if(updated.getPatient()!=null) existing.setPatient(updated.getPatient());
+					if(updated.getAssignedAt()!=null) existing.setAssignedAt(updated.getAssignedAt());
+					if(updated.getReleasedAt()!=null) existing.setReleasedAt(updated.getReleasedAt());
 					return repo.save(existing);
 				}).orElseThrow(()->new RuntimeException("EquipmentTracking not found with id: "+id));
 	}
