@@ -15,11 +15,9 @@ import com.example.HospitalResource.repository.PatientRepository;
 public class EquipmentTrackingService {
 	
 	private final EquipmentTrackingRepository repo;
-	private final PatientRepository patientRepo;
 	
-	public EquipmentTrackingService(EquipmentTrackingRepository repo,PatientRepository patientRepo) {
+	public EquipmentTrackingService(EquipmentTrackingRepository repo) {
 		this.repo=repo;
-		this.patientRepo=patientRepo;
 	}
 	
 	public List<EquipmentTracking> findAll(){
@@ -31,22 +29,14 @@ public class EquipmentTrackingService {
 	}
 	
 
-	public List<EquipmentTracking> findByPatientId(Long patientId){
-		return repo.findByPatientId(patientId);
-	}
 	
 	public EquipmentTracking create(EquipmentTrackingDto dto) {
-		Patient patient = patientRepo.findById(dto.getPatientId())
-	            .orElseThrow(() -> 
-	                    new RuntimeException("Patient not found with id: " + dto.getPatientId()));
-
 	    EquipmentTracking equipment = new EquipmentTracking();
 	    equipment.setEquipCode(dto.getEquipCode());
 	    equipment.setEquipName(dto.getEquipName());
 	    equipment.setStatus(dto.getStatus());
 	    equipment.setAssignedAt(dto.getAssignedAt());
 	    equipment.setReleasedAt(dto.getReleasedAt());
-	    equipment.setPatient(patient);  // Associate the patient
 
 	    return repo.save(equipment);
 	}
@@ -56,7 +46,6 @@ public class EquipmentTrackingService {
 				.map(existing->{ 
 					if(updated.getEquipName()!=null)existing.setEquipName(updated.getEquipName());
 					if(updated.getStatus()!=null) existing.setStatus(updated.getStatus());
-					if(updated.getPatient()!=null) existing.setPatient(updated.getPatient());
 					if(updated.getAssignedAt()!=null) existing.setAssignedAt(updated.getAssignedAt());
 					if(updated.getReleasedAt()!=null) existing.setReleasedAt(updated.getReleasedAt());
 					return repo.save(existing);

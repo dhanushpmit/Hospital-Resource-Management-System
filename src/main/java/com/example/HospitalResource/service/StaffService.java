@@ -31,10 +31,9 @@ public class StaffService {
 	public Staff update(Long id,Staff incoming) {
 		return repo.findById(id)
 				.map(existing->{
-					if(incoming.getStaffCode()!=null) existing.setStaffCode(incoming.getStaffCode());
 					if(incoming.getName()!=null) existing.setName(incoming.getName());
-					if(incoming.getRole()!=null) existing.setName(incoming.getName());
-					if(incoming.getDepartment()!=null) existing.setName(incoming.getDepartment());
+					if(incoming.getRole()!=null) existing.setRole(incoming.getRole());
+					if(incoming.getDepartment()!=null) existing.setDepartment(incoming.getDepartment());
 					if(incoming.getPhone()!=null) existing.setPhone(incoming.getPhone());
 					if(incoming.getIsActive()!=null) existing.setIsActive(incoming.getIsActive());
 					if(incoming.getShift()!=null) existing.setShift(incoming.getShift());

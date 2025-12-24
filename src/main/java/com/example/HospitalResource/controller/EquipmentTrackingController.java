@@ -2,6 +2,7 @@ package com.example.HospitalResource.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +41,10 @@ public class EquipmentTrackingController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/patient/{patientId}")
-	public ResponseEntity<List<EquipmentTracking>> findByPatientId(@PathVariable Long patientId){
-		return ResponseEntity.ok(service.findByPatientId(patientId));
-	}
-	
 	@PostMapping
 	public ResponseEntity<EquipmentTracking> create(@RequestBody EquipmentTrackingDto equipment){
-		return ResponseEntity.ok(service.create(equipment));
+		EquipmentTracking createdEquip=service.create(equipment);
+		return new ResponseEntity<>(createdEquip,HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")

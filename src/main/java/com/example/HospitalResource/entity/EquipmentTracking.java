@@ -34,9 +34,5 @@ public class EquipmentTracking {
 	private LocalDateTime releasedAt;
 	
 
-	@ManyToOne
-	@JoinColumn(name="patient_id",nullable=false)
-	@JsonIgnoreProperties({"bedAllocations","equipmentTrackings","staffList"})
-	private Patient patient;
 
 }

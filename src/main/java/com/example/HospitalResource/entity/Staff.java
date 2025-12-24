@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +32,10 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(unique=true,nullable =false)
 	private String staffCode;
+	
 	private String name;
 	private String role;
 	private String department;
@@ -40,7 +44,7 @@ public class Staff {
 	private String shift;
 	
 	@ManyToMany(mappedBy="staffList")
-	@JsonIgnoreProperties({"staffList","bedAllocations","equipmentTrackings"})
+	@JsonIgnoreProperties({"staffList","bedAllocations"})
 	private List<Patient> patients=new ArrayList<>();
 
 }

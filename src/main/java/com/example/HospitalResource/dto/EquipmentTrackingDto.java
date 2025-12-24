@@ -11,5 +11,4 @@ public class EquipmentTrackingDto {
     private String status;
     private LocalDateTime assignedAt;
     private LocalDateTime releasedAt;
-    private Long patientId;  
 }

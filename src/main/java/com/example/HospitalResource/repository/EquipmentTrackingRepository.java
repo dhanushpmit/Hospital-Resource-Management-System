@@ -8,6 +8,4 @@ import com.example.HospitalResource.entity.EquipmentTracking;
 import com.example.HospitalResource.entity.Patient;
 
 public interface EquipmentTrackingRepository extends JpaRepository<EquipmentTracking, Long> {
-	//List<EquipmentTracking> findByPatient(Patient patient);
-	List<EquipmentTracking> findByPatientId(Long patientId);
 }

@@ -33,8 +33,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude= {"staffList","bedAllocations","equipmentTrackings"})
-@ToString(exclude= {"staffList","bedAllocations","equipmentTrackings"})
+@EqualsAndHashCode(exclude= {"staffList","bedAllocations"})
+@ToString(exclude= {"staffList","bedAllocations"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Patient {
 	
@@ -63,11 +63,6 @@ public class Patient {
 	@Builder.Default
 	private List<BedAllocation> bedAllocations=new ArrayList<>();
 	
-	@OneToMany(mappedBy="patient",cascade = CascadeType.ALL,orphanRemoval = true)
-	@JsonIgnoreProperties({"patient"})
-	@Builder.Default
-	private List<EquipmentTracking> equipmentTrackings=new ArrayList<>();
-	
 	
 	  // ===== BIDIRECTIONAL HELPERS =====
 
@@ -91,8 +86,6 @@ public class Patient {
         bed.setPatient(this);
     }
 
-    public void addEquipment(EquipmentTracking equipment) {
-        equipmentTrackings.add(equipment);
-        equipment.setPatient(this);
-    }
+
+    
 }

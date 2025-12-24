@@ -58,6 +58,7 @@ public class BedAllocationService {
                 .patient(patient)
                 .bed(bed)
                 .allocationStart(dto.getAllocationStart())
+                .reason(dto.getReason())
                 .build();
 
         bed.setIsAvailable(false);

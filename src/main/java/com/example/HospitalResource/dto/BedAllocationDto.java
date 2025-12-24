@@ -9,4 +9,5 @@ public class BedAllocationDto {
     private Long patientId;          
     private Long bedId;
     private LocalDateTime allocationStart;
+    private String reason;
 }

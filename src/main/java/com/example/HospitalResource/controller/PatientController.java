@@ -103,7 +103,7 @@ public class PatientController {
 	}
 	
 	//assign staff
-	@PostMapping("/{patientId}/assign-staff/{staffId}")
+	@PutMapping("/{patientId}/assign-staff/{staffId}")
     public ResponseEntity<Patient> assignStaff(
             @PathVariable Long patientId,
             @PathVariable Long staffId) {
@@ -111,7 +111,7 @@ public class PatientController {
     }
 	
 	
-	 @PostMapping("/{patientId}/remove-staff/{staffId}")
+	 @PutMapping("/{patientId}/remove-staff/{staffId}")
 	    public ResponseEntity<Patient> removeStaff(@PathVariable Long patientId, @PathVariable Long staffId) {
 	        return ResponseEntity.ok(service.removeStaff(patientId, staffId));
 	    }

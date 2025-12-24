@@ -34,11 +34,14 @@ public class BedAllocation {
 
 	@ManyToOne(optional =false)
 	@JoinColumn(name="patient_id",nullable=false)
-	@JsonIgnoreProperties({"bedAllocations","equipmentTrackings","staffList"})
+	@JsonIgnoreProperties({"bedAllocations","staffList"})
 	private Patient patient;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name="bed_id")
 	private Bed bed;
+	
+	private String reason;
+
 	
 }
