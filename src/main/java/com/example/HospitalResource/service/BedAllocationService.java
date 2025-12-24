@@ -75,14 +75,14 @@ public class BedAllocationService {
                         new RuntimeException("Bed allocation not found with id: " + allocationId)
                 );
 
-        // ❗ VALIDATION 1: cannot discharge twice
+        //cannot discharge twice
         if (allocation.getAllocationEnd() != null) {
             throw new RuntimeException(
                     "This bed allocation is already discharged at " + allocation.getAllocationEnd()
             );
         }
 
-        // ❗ VALIDATION 2: discharge time fallback
+        //discharge time fallback
         LocalDateTime finalDischargeTime =
                 (dischargeTime != null) ? dischargeTime : LocalDateTime.now();
 
